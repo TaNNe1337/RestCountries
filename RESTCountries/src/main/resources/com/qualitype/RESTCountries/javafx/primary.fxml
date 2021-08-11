@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import com.qualitype.RESTCountries.javafx.util.*?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="1052.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.qualitype.RESTCountries.javafx.PrimaryController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="349.0" prefWidth="894.0" VBox.vgrow="ALWAYS">
+      <children>
+            <TableView fx:id="tableView" layoutX="32.0" layoutY="135.0" prefHeight="202.0" prefWidth="979.0">
+              <columns>
+                <TableColumn fx:id="Name" prefWidth="255.0" text="Name">
+                	<cellValueFactory>
+                		<PropertyValueFactory property="name" />
+                	</cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="Languages" minWidth="0.0" prefWidth="242.0" text="Languages">
+                	<cellValueFactory>
+                		<PropertyValueFactory property="languages" />
+                	</cellValueFactory>
+                	<cellFactory>
+                		<LanguageNameTableCellFactory />
+                	</cellFactory>
+                </TableColumn>
+                <TableColumn fx:id="Currencies" prefWidth="237.0" text="Currencies">
+                	<cellValueFactory>
+                		<PropertyValueFactory property="currencies" />
+                	</cellValueFactory>
+                	<cellFactory>
+                		<CurrencyNameTableCellFactory />
+                	</cellFactory>
+                </TableColumn>
+                  <TableColumn fx:id="Flag" minWidth="0.0" prefWidth="242.0" text="Flag">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="flag" />
+                     </cellValueFactory>
+                     <cellFactory>
+                     	<FlagCellFactory />
+                     </cellFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <TextField fx:id="searchField" layoutX="32.0" layoutY="99.0" />
+            <Button fx:id="searchButton" layoutX="204.0" layoutY="99.0" mnemonicParsing="false" onAction="#getResult" text="Search" />
+            <Button fx:id="getAll" layoutX="663.0" layoutY="99.0" mnemonicParsing="false" onAction="#getAllCountries" text="Get all Countries" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

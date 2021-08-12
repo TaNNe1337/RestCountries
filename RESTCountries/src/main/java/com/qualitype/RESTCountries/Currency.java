@@ -7,11 +7,6 @@ public class Currency {
 	private final SimpleStringProperty name = new SimpleStringProperty(this, "name");
 	private String symbol;
 
-//	@Override
-//	public String toString() {
-//		return this.name;
-//	}
-
 	public String getCode() {
 		return this.code;
 	}

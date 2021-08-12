@@ -14,11 +14,10 @@ import jakarta.ws.rs.client.Invocation;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import javafx.scene.image.Image;
 
 public class RestCountryManager implements CountryManager {
 
-	//"https://restcountries.eu/rest/v2"
+	// "https://restcountries.eu/rest/v2"
 	Client client;
 	WebTarget webTarget;
 
@@ -26,6 +25,7 @@ public class RestCountryManager implements CountryManager {
 		this.client = ClientBuilder.newClient();
 		this.webTarget = this.client.target("https://restcountries.eu/rest/v2");
 	}
+
 	@Override
 	public List<Country> getAllCountries() {
 		final WebTarget allTarget = this.webTarget.path("/all");
@@ -33,7 +33,6 @@ public class RestCountryManager implements CountryManager {
 		try (Response response = invocationBuilder.get()) {
 			if (response.getStatus() == 200) {
 				final List<Country> output = Arrays.asList(response.readEntity(Country[].class));
-				output.stream().forEach(c -> c.setFlagImage(new Image(c.getFlag(), true)));
 				response.close();
 				return output;
 			}

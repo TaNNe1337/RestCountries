@@ -5,6 +5,7 @@ module com.qualitype.RESTCountries.javafx {
 	requires javafx.graphics;
 	requires jakarta.ws.rs;
 	requires com.fasterxml.jackson.annotation;
+	requires java.logging;
 
 	opens com.qualitype.RESTCountries.javafx to javafx.fxml;
 	opens com.qualitype.RESTCountries;

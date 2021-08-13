@@ -1,5 +1,9 @@
 package com.qualitype.RESTCountries.rest;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import com.qualitype.RESTCountries.ConvertManager;
 
 import jakarta.ws.rs.client.Client;
@@ -13,26 +17,42 @@ public class RestConvertManager implements ConvertManager {
 
 	Client client;
 	WebTarget webTarget;
-	static private final String KEY = "9582|MZNdLeMjJjgbrBu8XUBQ17eRGXFkz6rA";
-	// https://fixer.io/product
 
 	public RestConvertManager() {
 		this.client = ClientBuilder.newClient();
-		this.webTarget = this.client.target("http://api.valuta.money/v1/quotes");
+		this.webTarget = this.client.target("https://currency-exchange.p.rapidapi.com");
 	}
 
 	@Override
-	public double convert(String source, String target, double quantity) {
-		final WebTarget allTarget = this.webTarget.path(source).path(target).path("json").queryParam("qty", quantity)
-				.queryParam("k", KEY);
-		final Invocation.Builder invocationBuilder = allTarget.request(MediaType.APPLICATION_JSON);
+	public Double convert(String source, String target, double quantity) {
+		final WebTarget allTarget = this.webTarget.path("exchange").queryParam("to", target).queryParam("from", source).queryParam("q",
+				Double.valueOf(quantity));
+		final Invocation.Builder invocationBuilder = allTarget.request(MediaType.APPLICATION_JSON)
+				.header("x-rapidapi-key", "a6e6ce8f06msh1805fd37a9de427p1a0dd9jsn13b67ae656fc")
+				.header("x-rapidapi-host", "currency-exchange.p.rapidapi.com");
 		try (Response response = invocationBuilder.get()) {
 			if (response.getStatus() == 200) {
-				final double output = response.readEntity(Double.class);
+				final Double output = response.readEntity(Double.class);
 				response.close();
 				return output;
 			}
-			return 0;
+			return null;
+		}
+	}
+
+	@Override
+	public List<String> getAllCurrencies() {
+		final WebTarget allTarget = this.webTarget.path("listquotes");
+		final Invocation.Builder invocationBuilder = allTarget.request(MediaType.TEXT_PLAIN)
+				.header("x-rapidapi-key", "a6e6ce8f06msh1805fd37a9de427p1a0dd9jsn13b67ae656fc")
+				.header("x-rapidapi-host", "currency-exchange.p.rapidapi.com");
+		try (Response response = invocationBuilder.get()) {
+			if (response.getStatus() == 200) {
+				final List<String> output = Arrays.asList(response.readEntity(String[].class));
+				response.close();
+				return output;
+			}
+			return Collections.emptyList();
 		}
 	}
 

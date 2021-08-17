@@ -79,6 +79,7 @@ public class PrimaryController implements Initializable {
 			for (final String currencyApi : fromApi) {
 				if (currencyApi.equals(currencyCountry.getCode()) && !result.contains(currencyCountry)) {
 					result.add(currencyCountry);
+					// TODO fix
 				}
 			}
 		}

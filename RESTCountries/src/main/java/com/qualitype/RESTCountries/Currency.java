@@ -1,5 +1,7 @@
 package com.qualitype.RESTCountries;
 
+import java.util.Objects;
+
 import javafx.beans.property.SimpleStringProperty;
 
 public class Currency {
@@ -29,5 +31,31 @@ public class Currency {
 
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
+	}
+
+	@Override
+	public String toString() {
+		return "Currency [code=" + this.code + ", name=" + this.name.get() + ", symbol=" + this.symbol + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.code, this.name, this.symbol);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Currency other = (Currency) obj;
+		return Objects.equals(this.code, other.code) && Objects.equals(this.name, other.name)
+				&& Objects.equals(this.symbol, other.symbol);
 	}
 }

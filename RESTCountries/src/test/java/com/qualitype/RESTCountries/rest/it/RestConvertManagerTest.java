@@ -15,11 +15,11 @@ public class RestConvertManagerTest {
 	final RestConvertManager manager = new RestConvertManager();
 	List<String> listOfCurrencies = new ArrayList<>();
 
-	//["SGD","MYR","EUR","USD","AUD","JPY","CNH","HKD","CAD","INR","DKK","GBP","RUB","NZD","MXN","IDR","TWD","THB","VND"]
+	// ["SGD","MYR","EUR","USD","AUD","JPY","CNH","HKD","CAD","INR","DKK","GBP","RUB","NZD","MXN","IDR","TWD","THB","VND"]
 	@Before
 	public void setUp() {
-		final String[] arrayOfCurrencies = {"SGD", "MYR", "EUR", "USD", "AUD", "JPY", "CNH", "HKD", "CAD", "INR", "DKK", "GBP", "RUB",
-				"NZD", "MXN", "IDR", "TWD", "THB", "VND"};
+		final String[] arrayOfCurrencies = { "SGD", "MYR", "EUR", "USD", "AUD", "JPY", "CNH", "HKD", "CAD", "INR",
+				"DKK", "GBP", "RUB", "NZD", "MXN", "IDR", "TWD", "THB", "VND" };
 		this.listOfCurrencies = Arrays.asList(arrayOfCurrencies);
 	}
 
@@ -32,6 +32,7 @@ public class RestConvertManagerTest {
 	@Test
 	public void testGetAllCurrencies() throws Exception {
 		final List<String> result = this.manager.getAllCurrencies();
+		result.forEach(System.out::println);
 		Assert.assertEquals(this.listOfCurrencies, result);
 	}
 

@@ -1,12 +1,14 @@
 package com.qualitype.RESTCountries.javafx;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.qualitype.RESTCountries.Country;
 import com.qualitype.RESTCountries.Currency;
 import com.qualitype.RESTCountries.Language;
+import com.qualitype.RESTCountries.rest.RestConvertManager;
 import com.qualitype.RESTCountries.rest.RestCountryManager;
 
 import javafx.fxml.FXML;
@@ -43,20 +45,45 @@ public class PrimaryController implements Initializable {
 	@FXML
 	private ComboBox<Currency> resultCurrencyCombobox;
 
-	private RestCountryManager manager;
+	private RestCountryManager countryManager;
+	private RestConvertManager convertManager;
+	private List<Currency> availableCurrencies = new ArrayList<>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.manager = new RestCountryManager();
+		this.countryManager = new RestCountryManager();
+		this.convertManager = new RestConvertManager();
+		this.availableCurrencies = this.getAvailableCurrencies();
+		this.resultCurrencyCombobox.getItems().addAll(this.availableCurrencies);
+		this.sourceCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 	}
+
 	@FXML
 	private void getResult() {
-		final List<Country> countries = this.manager.searchByName(this.searchField.getText());
+		final List<Country> countries = this.countryManager.searchByName(this.searchField.getText());
 		this.tableView.getItems().setAll(countries);
 	}
+
 	@FXML
 	private void getAllCountries() {
-		final List<Country> countries = this.manager.getAllCountries();
+		final List<Country> countries = this.countryManager.getAllCountries();
 		this.tableView.getItems().setAll(countries);
+	}
+
+	private List<Currency> getAvailableCurrencies() {
+		final List<Currency> result = new ArrayList<>();
+		final List<Currency> fromCountries = this.countryManager.getAllCurrencies();
+		final List<String> fromApi = this.convertManager.getAllCurrencies();
+
+		for (final Currency currencyCountry : fromCountries) {
+			for (final String currencyApi : fromApi) {
+				if (currencyApi.equals(currencyCountry.getCode()) && !result.contains(currencyCountry)) {
+					result.add(currencyCountry);
+				}
+			}
+		}
+
+		return result;
+
 	}
 }

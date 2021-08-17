@@ -3,6 +3,7 @@ package com.qualitype.RESTCountries.rest;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.qualitype.RESTCountries.Country;
 import com.qualitype.RESTCountries.CountryManager;
@@ -56,18 +57,9 @@ public class RestCountryManager implements CountryManager {
 	}
 
 	@Override
-	public List<Currency> getCurrenciesByCountry(String fullName) {
-		final WebTarget nameTarget = this.webTarget.path("/name").path(fullName).queryParam("fullText", "true");
-		final Invocation.Builder invocationBuilder = nameTarget.request(MediaType.APPLICATION_JSON);
-		try (Response response = invocationBuilder.get()) {
-			if (response.getStatus() == 200) {
-				final List<Country> countries = Arrays.asList(response.readEntity(Country[].class));
-				final List<Currency> currencies = countries.get(0).getCurrencies();
-				response.close();
-				return currencies;
-			}
-			return Collections.emptyList();
-		}
+	public List<Currency> getAllCurrencies() {
+		final List<Country> allCountries = getAllCountries();
+		return allCountries.stream().map(Country::getCurrencies).flatMap(List::stream).collect(Collectors.toList());
 	}
 
 }

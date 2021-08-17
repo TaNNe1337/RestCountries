@@ -27,7 +27,8 @@ public class RestCountryManagerTest {
 
 	@Test
 	public void testGetCurrencyByCountry() {
-		final List<Currency> currency = this.manager.getCurrenciesByCountry("Germany");
+		final List<Currency> currency = this.manager.getAllCurrencies();
+		currency.stream().forEach(System.out::println);
 		Assert.assertEquals("Euro", currency.get(0).getName());
 	}
 

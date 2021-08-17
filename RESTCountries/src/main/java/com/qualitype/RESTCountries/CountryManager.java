@@ -7,5 +7,5 @@ public interface CountryManager {
 
 	List<Country> searchByName(String name);
 
-	List<Currency> getCurrenciesByCountry(String fullName);
+	List<Currency> getAllCurrencies();
 }

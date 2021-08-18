@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.qualitype.RESTCountries.Country;
 import com.qualitype.RESTCountries.Currency;
 import com.qualitype.RESTCountries.Language;
+import com.qualitype.RESTCountries.javafx.util.CurrencyNameComboCellFactory;
 import com.qualitype.RESTCountries.rest.RestConvertManager;
 import com.qualitype.RESTCountries.rest.RestCountryManager;
 
@@ -51,11 +52,14 @@ public class PrimaryController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		final CurrencyNameComboCellFactory<Currency> cellFactory = new CurrencyNameComboCellFactory<>();
 		this.countryManager = new RestCountryManager();
 		this.convertManager = new RestConvertManager();
 		this.availableCurrencies = this.getAvailableCurrencies();
 		this.resultCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 		this.sourceCurrencyCombobox.getItems().addAll(this.availableCurrencies);
+		this.sourceCurrencyCombobox.setButtonCell(cellFactory.call(null));
+		this.resultCurrencyCombobox.setButtonCell(cellFactory.call(null));
 	}
 
 	@FXML
@@ -79,7 +83,6 @@ public class PrimaryController implements Initializable {
 			for (final String currencyApi : fromApi) {
 				if (currencyApi.equals(currencyCountry.getCode()) && !result.contains(currencyCountry)) {
 					result.add(currencyCountry);
-					// TODO fix
 				}
 			}
 		}

@@ -13,8 +13,4 @@ public class CurrencyNameComboCellFactory<S> implements Callback<ListView<Curren
 		return new CurrencyNameComboCell<>();
 	}
 
-//
-//	public ComboBoxListCell<List<Currency>> call(ComboBoxListCell<List<Currency>> param) {
-//		return new CurrencyNameComboCell<>();
-//	}
 }

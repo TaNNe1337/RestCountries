@@ -40,7 +40,7 @@ public class Currency {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.code, this.name, this.symbol);
+		return Objects.hash(this.code, this.symbol);
 	}
 
 	@Override
@@ -55,7 +55,6 @@ public class Currency {
 			return false;
 		}
 		final Currency other = (Currency) obj;
-		return Objects.equals(this.code, other.code) && Objects.equals(this.name, other.name)
-				&& Objects.equals(this.symbol, other.symbol);
+		return Objects.equals(this.code, other.code) && Objects.equals(this.symbol, other.symbol);
 	}
 }

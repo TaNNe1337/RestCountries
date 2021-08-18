@@ -12,6 +12,8 @@ import com.qualitype.RESTCountries.javafx.util.CurrencyNameComboCellFactory;
 import com.qualitype.RESTCountries.rest.RestConvertManager;
 import com.qualitype.RESTCountries.rest.RestCountryManager;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -60,6 +62,7 @@ public class PrimaryController implements Initializable {
 		this.sourceCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 		this.sourceCurrencyCombobox.setButtonCell(cellFactory.call(null));
 		this.resultCurrencyCombobox.setButtonCell(cellFactory.call(null));
+		addListener(this.sourceCurrencySpinner);
 	}
 
 	@FXML
@@ -78,7 +81,6 @@ public class PrimaryController implements Initializable {
 		final List<Currency> result = new ArrayList<>();
 		final List<Currency> fromCountries = this.countryManager.getAllCurrencies();
 		final List<String> fromApi = this.convertManager.getAllCurrencies();
-
 		for (final Currency currencyCountry : fromCountries) {
 			for (final String currencyApi : fromApi) {
 				if (currencyApi.equals(currencyCountry.getCode()) && !result.contains(currencyCountry)) {
@@ -86,8 +88,21 @@ public class PrimaryController implements Initializable {
 				}
 			}
 		}
-
 		return result;
-
 	}
+
+	private void addListener(Spinner<Double> spinner) {
+		spinner.valueProperty().addListener(new ChangeListener<Double>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
+				PrimaryController.this.resultField.setText(String.valueOf(PrimaryController.this.convertManager.convert(
+						PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
+						PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
+						oldValue.doubleValue())));
+
+			}
+		});
+	}
+
 }

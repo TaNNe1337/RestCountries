@@ -13,6 +13,5 @@ public class CurrencyNameTableCellFactory<S> implements Callback<TableColumn<S, 
 	@Override
 	public TableCell<S, List<Currency>> call(TableColumn<S, List<Currency>> param) {
 		return new CurrencyNameTableCell<>();
-		//teswt
 	}
 }

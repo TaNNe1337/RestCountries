@@ -100,7 +100,7 @@ public class PrimaryController implements Initializable {
 						PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
 						PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
 						oldValue.doubleValue())));
-
+//				alskjhdl
 			}
 		});
 	}

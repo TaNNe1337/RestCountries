@@ -12,8 +12,6 @@ import com.qualitype.RESTCountries.javafx.util.CurrencyNameComboCellFactory;
 import com.qualitype.RESTCountries.rest.RestConvertManager;
 import com.qualitype.RESTCountries.rest.RestCountryManager;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -47,6 +45,8 @@ public class PrimaryController implements Initializable {
 	private TextField resultField;
 	@FXML
 	private ComboBox<Currency> resultCurrencyCombobox;
+	@FXML
+	private Button convertButton;
 
 	private RestCountryManager countryManager;
 	private RestConvertManager convertManager;
@@ -62,7 +62,8 @@ public class PrimaryController implements Initializable {
 		this.sourceCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 		this.sourceCurrencyCombobox.setButtonCell(cellFactory.call(null));
 		this.resultCurrencyCombobox.setButtonCell(cellFactory.call(null));
-		addListener(this.sourceCurrencySpinner);
+//		addListener(this.sourceCurrencySpinner);
+		addSelectionListener(this.tableView);
 	}
 
 	@FXML
@@ -75,6 +76,14 @@ public class PrimaryController implements Initializable {
 	private void getAllCountries() {
 		final List<Country> countries = this.countryManager.getAllCountries();
 		this.tableView.getItems().setAll(countries);
+	}
+
+	@FXML
+	private void doConversion() {
+		final Double conversionRate = this.convertManager.convert(
+				this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
+				this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(), 1);
+		this.resultField.setText(String.format("%.2f", this.sourceCurrencySpinner.getValue() * conversionRate));
 	}
 
 	private List<Currency> getAvailableCurrencies() {
@@ -91,16 +100,24 @@ public class PrimaryController implements Initializable {
 		return result;
 	}
 
-	private void addListener(Spinner<Double> spinner) {
-		spinner.valueProperty().addListener(new ChangeListener<Double>() {
+//	private void addListener(Spinner<Double> spinner) {
+//		spinner.valueProperty().addListener(new ChangeListener<Double>() {
+//
+//			@Override
+//			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
+//				PrimaryController.this.resultField.setText(String.valueOf(PrimaryController.this.convertManager.convert(
+//						PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
+//						PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
+//						oldValue.doubleValue())));
+////				alskjhdl
+//			}
+//		});
+//	}
 
-			@Override
-			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-				PrimaryController.this.resultField.setText(String.valueOf(PrimaryController.this.convertManager.convert(
-						PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
-						PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
-						oldValue.doubleValue())));
-//				alskjhdl
+	private void addSelectionListener(TableView<Country> tableView1) {
+		tableView1.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			if (newSelection != null && this.availableCurrencies.contains(newSelection.getCurrencies().get(0))) {
+				this.sourceCurrencyCombobox.setValue(newSelection.getCurrencies().get(0));
 			}
 		});
 	}

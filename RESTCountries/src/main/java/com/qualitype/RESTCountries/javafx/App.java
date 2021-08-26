@@ -1,6 +1,7 @@
 package com.qualitype.RESTCountries.javafx;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,8 @@ public class App extends Application {
 	}
 
 	private static Parent loadFXML(String fxml) throws IOException {
-		final FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+		final var bundle = ResourceBundle.getBundle("com.qualitype.RESTCountries.javafx.messages");
+		final FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"), bundle);
 		return fxmlLoader.load();
 	}
 

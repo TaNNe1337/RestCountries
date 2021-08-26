@@ -42,19 +42,20 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import com.qualitype.RESTCountries.javafx.util.*?>
 
 <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.qualitype.RESTCountries.javafx.PrimaryController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="349.0" prefWidth="894.0" VBox.vgrow="ALWAYS">
       <children>
-            <TableView fx:id="tableView" layoutX="32.0" layoutY="135.0" prefHeight="202.0" prefWidth="738.0">
+            <TableView fx:id="tableView" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="135.0">
               <columns>
-                <TableColumn fx:id="Name" prefWidth="255.0" text="Name">
+                <TableColumn fx:id="Name" prefWidth="${tableView.width*0.333}" text="%name">
                 	<cellValueFactory>
                 		<PropertyValueFactory property="name" />
                 	</cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="Languages" minWidth="0.0" prefWidth="242.0" text="Languages">
+                <TableColumn fx:id="Languages" minWidth="0.0" prefWidth="${tableView.width*0.333}" text="%languages">
                 	<cellValueFactory>
                 		<PropertyValueFactory property="languages" />
                 	</cellValueFactory>
@@ -62,7 +63,7 @@
                 		<LanguageNameTableCellFactory />
                 	</cellFactory>
                 </TableColumn>
-                <TableColumn fx:id="Currencies" prefWidth="237.0" text="Currencies">
+                <TableColumn fx:id="Currencies" prefWidth="${tableView.width*0.333}" text="%currencies">
                 	<cellValueFactory>
                 		<PropertyValueFactory property="currencies" />
                 	</cellValueFactory>
@@ -72,26 +73,26 @@
                 </TableColumn>
               </columns>
             </TableView>
-            <TextField fx:id="searchField" layoutX="32.0" layoutY="99.0" />
-            <Button fx:id="searchButton" layoutX="204.0" layoutY="99.0" mnemonicParsing="false" onAction="#getResult" text="Search" />
-            <Button fx:id="getAll" layoutX="663.0" layoutY="99.0" mnemonicParsing="false" onAction="#getAllCountries" text="Get all Countries" />
-            <Spinner fx:id="sourceCurrencySpinner" editable="true" layoutX="32.0" layoutY="366.0">
+            <TextField fx:id="searchField" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="99.0" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#getResult" text="%search" AnchorPane.leftAnchor="204.0" AnchorPane.topAnchor="99.0" />
+            <Button fx:id="getAll" mnemonicParsing="false" onAction="#getAllCountries" text="%getAllCountries" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="99.0" />
+            <Spinner fx:id="sourceCurrencySpinner" editable="true" AnchorPane.bottomAnchor="106.0" AnchorPane.leftAnchor="32.0">
             	<valueFactory>
             		<SpinnerValueFactory.DoubleSpinnerValueFactory amountToStepBy="1.0" initialValue="1.0" max="100000.0" min="0.0" />
             	</valueFactory>
             </Spinner>
-            <ComboBox fx:id="sourceCurrencyCombobox" layoutX="197.0" layoutY="366.0" prefWidth="150.0">
+            <ComboBox fx:id="sourceCurrencyCombobox" prefWidth="150.0" AnchorPane.bottomAnchor="106.0" AnchorPane.leftAnchor="204.0">
             <cellFactory>
             	<CurrencyNameComboCellFactory />
             </cellFactory>
             </ComboBox>
-            <TextField fx:id="resultField" editable="false" layoutX="32.0" layoutY="434.0" prefHeight="25.0" prefWidth="149.0" />
-            <ComboBox fx:id="resultCurrencyCombobox" layoutX="197.0" layoutY="434.0" prefWidth="150.0">
+            <TextField fx:id="resultField" editable="false" prefHeight="25.0" prefWidth="149.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="32.0" />
+            <ComboBox fx:id="resultCurrencyCombobox" prefWidth="150.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="204.0">
             <cellFactory>
             	<CurrencyNameComboCellFactory />
             </cellFactory>
             </ComboBox>
-            <Button fx:id="convertButton" layoutX="368.0" layoutY="366.0" mnemonicParsing="false" onAction="#doConversion" text="Convert" />
+            <Button fx:id="convertButton" mnemonicParsing="false" onAction="#doConversion" text="%convert" AnchorPane.bottomAnchor="106.0" AnchorPane.leftAnchor="383.0" />
       </children>
     </AnchorPane>
   </children>

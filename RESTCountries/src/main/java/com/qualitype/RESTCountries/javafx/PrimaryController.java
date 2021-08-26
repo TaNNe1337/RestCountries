@@ -109,15 +109,15 @@ public class PrimaryController implements Initializable {
 //						PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
 //						PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
 //						oldValue.doubleValue())));
-////				alskjhdl
 //			}
 //		});
 //	}
 
 	private void addSelectionListener(TableView<Country> tableView1) {
 		tableView1.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			if (newSelection != null && this.availableCurrencies.contains(newSelection.getCurrencies().get(0))) {
-				this.sourceCurrencyCombobox.setValue(newSelection.getCurrencies().get(0));
+			final var currency = newSelection.getCurrencies().get(0);
+			if (currency != null && this.availableCurrencies.contains(currency)) {
+				this.sourceCurrencyCombobox.setValue(currency);
 			}
 		});
 	}

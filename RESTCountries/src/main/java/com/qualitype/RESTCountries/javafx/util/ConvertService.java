@@ -29,6 +29,8 @@ public class ConvertService extends Service<Double> {
 //								PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
 //								PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
 //								oldValue.doubleValue())));
+
+						//teaisudgaskjgdakjhg
 					}
 				});
 				return null;

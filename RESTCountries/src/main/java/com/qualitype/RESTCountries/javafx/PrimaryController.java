@@ -62,7 +62,7 @@ public class PrimaryController implements Initializable {
 		this.sourceCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 		this.sourceCurrencyCombobox.setButtonCell(cellFactory.call(null));
 		this.resultCurrencyCombobox.setButtonCell(cellFactory.call(null));
-//		addListener(this.sourceCurrencySpinner);
+//		addListener();
 		addSelectionListener(this.tableView);
 	}
 
@@ -100,17 +100,9 @@ public class PrimaryController implements Initializable {
 		return result;
 	}
 
-//	private void addListener(Spinner<Double> spinner) {
-//		spinner.valueProperty().addListener(new ChangeListener<Double>() {
-//
-//			@Override
-//			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-//				PrimaryController.this.resultField.setText(String.valueOf(PrimaryController.this.convertManager.convert(
-//						PrimaryController.this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
-//						PrimaryController.this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
-//						oldValue.doubleValue())));
-//			}
-//		});
+//	private void addListener() {
+//		final ConvertService cs = new ConvertService(this);
+//		cs.start();
 //	}
 
 	private void addSelectionListener(TableView<Country> tableView1) {
@@ -120,6 +112,24 @@ public class PrimaryController implements Initializable {
 				this.sourceCurrencyCombobox.setValue(currency);
 			}
 		});
+	}
+
+	public Spinner<Double> getSpinner() {
+		return this.sourceCurrencySpinner;
+	}
+
+	public TextField getResultField() {
+		return this.resultField;
+	}
+	public RestConvertManager getConvertManager() {
+		return this.convertManager;
+	}
+
+	public ComboBox<Currency> getSourceComboBox() {
+		return this.sourceCurrencyCombobox;
+	}
+	public ComboBox<Currency> getResultComboBox() {
+		return this.resultCurrencyCombobox;
 	}
 
 }

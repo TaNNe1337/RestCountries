@@ -1,0 +1,11 @@
+#searchButton{
+	-fx-background-color: blue;
+	-fx-font-weight: bold;
+}
+
+
+.button { 
+   -fx-cursor: hand;
+   -fx-background-color: red; 
+   -fx-text-fill: white; 
+}

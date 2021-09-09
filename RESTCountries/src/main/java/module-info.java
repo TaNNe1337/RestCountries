@@ -12,4 +12,5 @@ module com.qualitype.RESTCountries.javafx {
 	exports com.qualitype.RESTCountries.javafx;
 	exports com.qualitype.RESTCountries;
 	exports com.qualitype.RESTCountries.javafx.util;
+	exports com.qualitype.RESTCountries.rest;
 }

@@ -28,11 +28,15 @@ public class ConvertService extends Service<Void> {
 
 					@Override
 					public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-						ConvertService.this.pc.getResultField()
-								.setText(String.valueOf(ConvertService.this.pc.getConvertManager().convert(
-										ConvertService.this.pc.getSourceComboBox().getSelectionModel().getSelectedItem().getCode(),
-										ConvertService.this.pc.getResultComboBox().getSelectionModel().getSelectedItem().getCode(),
-										newValue.doubleValue())));
+						try {
+							ConvertService.this.pc.getResultField()
+									.setText(String.valueOf(ConvertService.this.pc.getConvertManager().convert(
+											ConvertService.this.pc.getSourceComboBox().getSelectionModel().getSelectedItem().getCode(),
+											ConvertService.this.pc.getResultComboBox().getSelectionModel().getSelectedItem().getCode(),
+											newValue.doubleValue())));
+						} catch (final Exception e) {
+							e.printStackTrace();
+						}
 
 					}
 				});

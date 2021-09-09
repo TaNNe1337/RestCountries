@@ -57,36 +57,45 @@ public class PrimaryController implements Initializable {
 		final CurrencyNameComboCellFactory<Currency> cellFactory = new CurrencyNameComboCellFactory<>();
 		this.countryManager = new RestCountryManager();
 		this.convertManager = new RestConvertManager();
-		this.availableCurrencies = this.getAvailableCurrencies();
+		try {
+			this.availableCurrencies = this.getAvailableCurrencies();
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
 		this.resultCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 		this.sourceCurrencyCombobox.getItems().addAll(this.availableCurrencies);
 		this.sourceCurrencyCombobox.setButtonCell(cellFactory.call(null));
 		this.resultCurrencyCombobox.setButtonCell(cellFactory.call(null));
+		this.sourceCurrencyCombobox.getSelectionModel().selectFirst();
+		this.resultCurrencyCombobox.getSelectionModel().selectFirst();
 //		addListener();
 		addSelectionListener(this.tableView);
 	}
 
 	@FXML
-	private void getResult() {
+	private void getResult() throws Exception {
 		final List<Country> countries = this.countryManager.searchByName(this.searchField.getText());
 		this.tableView.getItems().setAll(countries);
 	}
 
 	@FXML
-	private void getAllCountries() {
+	private void getAllCountries() throws Exception {
 		final List<Country> countries = this.countryManager.getAllCountries();
 		this.tableView.getItems().setAll(countries);
 	}
 
 	@FXML
-	private void doConversion() {
-		final Double conversionRate = this.convertManager.convert(
-				this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(),
-				this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode(), 1);
-		this.resultField.setText(String.format("%.2f", this.sourceCurrencySpinner.getValue() * conversionRate));
+	private void doConversion() throws Exception {
+		final String sourceCurrency = this.sourceCurrencyCombobox.getSelectionModel().getSelectedItem().getCode();
+		final String resultCurrency = this.resultCurrencyCombobox.getSelectionModel().getSelectedItem().getCode();
+		if (sourceCurrency != null && resultCurrency != null) {
+			final Double conversionRate = this.convertManager.convert(sourceCurrency, resultCurrency, 1);
+			this.resultField.setText(String.format("%.2f", this.sourceCurrencySpinner.getValue() * conversionRate));
+		}
+
 	}
 
-	private List<Currency> getAvailableCurrencies() {
+	private List<Currency> getAvailableCurrencies() throws Exception {
 		final List<Currency> result = new ArrayList<>();
 		final List<Currency> fromCountries = this.countryManager.getAllCurrencies();
 		final List<String> fromApi = this.convertManager.getAllCurrencies();

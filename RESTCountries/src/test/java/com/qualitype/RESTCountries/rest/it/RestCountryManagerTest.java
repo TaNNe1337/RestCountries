@@ -20,13 +20,13 @@ public class RestCountryManagerTest {
 	}
 
 	@Test
-	public void testSearchByName() {
+	public void testSearchByName() throws Exception {
 		final List<Country> countries = this.manager.searchByName("Germany");
 		Assert.assertEquals("Germany", countries.get(0).getName());
 	}
 
 	@Test
-	public void testGetCurrencyByCountry() {
+	public void testGetCurrencyByCountry() throws Exception {
 		final List<Currency> currency = this.manager.getAllCurrencies();
 		currency.stream().forEach(System.out::println);
 		Assert.assertEquals("Euro", currency.get(0).getName());

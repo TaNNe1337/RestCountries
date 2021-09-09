@@ -28,7 +28,7 @@ public class RestCountryManager implements CountryManager {
 	}
 
 	@Override
-	public List<Country> getAllCountries() {
+	public List<Country> getAllCountries() throws Exception {
 		final WebTarget allTarget = this.webTarget.path("/all");
 		final Invocation.Builder invocationBuilder = allTarget.request(MediaType.APPLICATION_JSON);
 		try (Response response = invocationBuilder.get()) {
@@ -42,7 +42,7 @@ public class RestCountryManager implements CountryManager {
 	}
 
 	@Override
-	public List<Country> searchByName(String name) {
+	public List<Country> searchByName(String name) throws Exception {
 		final WebTarget nameTarget = this.webTarget.path("/name").path(name);
 		final Invocation.Builder invocationBuilder = nameTarget.request(MediaType.APPLICATION_JSON);
 		try (Response response = invocationBuilder.get()) {
@@ -57,7 +57,7 @@ public class RestCountryManager implements CountryManager {
 	}
 
 	@Override
-	public List<Currency> getAllCurrencies() {
+	public List<Currency> getAllCurrencies() throws Exception {
 		final List<Country> allCountries = getAllCountries();
 		return allCountries.stream().map(Country::getCurrencies).flatMap(List::stream).collect(Collectors.toList());
 	}

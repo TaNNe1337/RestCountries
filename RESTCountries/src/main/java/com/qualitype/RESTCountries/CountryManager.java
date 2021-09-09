@@ -3,9 +3,9 @@ package com.qualitype.RESTCountries;
 import java.util.List;
 
 public interface CountryManager {
-	List<Country> getAllCountries();
+	List<Country> getAllCountries() throws Exception;
 
-	List<Country> searchByName(String name);
+	List<Country> searchByName(String name) throws Exception;
 
-	List<Currency> getAllCurrencies();
+	List<Currency> getAllCurrencies() throws Exception;
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface ConvertManager {
 
-	Double convert(String source, String target, double quantity);
+	Double convert(String source, String target, double quantity) throws Exception;
 
-	List<String> getAllCurrencies();
+	List<String> getAllCurrencies() throws Exception;
 
 }

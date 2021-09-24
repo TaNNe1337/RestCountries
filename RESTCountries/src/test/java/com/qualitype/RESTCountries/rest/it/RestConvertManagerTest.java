@@ -32,7 +32,6 @@ public class RestConvertManagerTest {
 	@Test
 	public void testGetAllCurrencies() throws Exception {
 		final List<String> result = this.manager.getAllCurrencies();
-		result.forEach(System.out::println);
 		Assert.assertEquals(this.listOfCurrencies, result);
 	}
 

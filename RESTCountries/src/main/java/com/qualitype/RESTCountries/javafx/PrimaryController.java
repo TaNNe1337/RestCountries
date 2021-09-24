@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import com.qualitype.RESTCountries.Country;
 import com.qualitype.RESTCountries.Currency;
 import com.qualitype.RESTCountries.Language;
+import com.qualitype.RESTCountries.javafx.util.ConvertService;
 import com.qualitype.RESTCountries.javafx.util.CurrencyNameComboCellFactory;
 import com.qualitype.RESTCountries.rest.RestConvertManager;
 import com.qualitype.RESTCountries.rest.RestCountryManager;
@@ -68,7 +69,7 @@ public class PrimaryController implements Initializable {
 		this.resultCurrencyCombobox.setButtonCell(cellFactory.call(null));
 		this.sourceCurrencyCombobox.getSelectionModel().selectFirst();
 		this.resultCurrencyCombobox.getSelectionModel().selectFirst();
-//		addListener();
+		addListener();
 		addSelectionListener(this.tableView);
 	}
 
@@ -109,10 +110,10 @@ public class PrimaryController implements Initializable {
 		return result;
 	}
 
-//	private void addListener() {
-//		final ConvertService cs = new ConvertService(this);
-//		cs.start();
-//	}
+	private void addListener() {
+		final ConvertService cs = new ConvertService(this);
+		cs.start();
+	}
 
 	private void addSelectionListener(TableView<Country> tableView1) {
 		tableView1.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

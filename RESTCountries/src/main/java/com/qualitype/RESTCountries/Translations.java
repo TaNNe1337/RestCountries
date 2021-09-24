@@ -6,6 +6,7 @@ public class Translations extends CountryTranslations {
 	private String nl;
 	private String hr;
 	private String fa;
+	private String hu;
 
 	public String getBr() {
 		return this.br;
@@ -25,5 +26,9 @@ public class Translations extends CountryTranslations {
 
 	public String getFa() {
 		return this.fa;
+	}
+
+	public String getHu() {
+		return this.hu;
 	}
 }

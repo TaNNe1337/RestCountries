@@ -2,6 +2,7 @@ package com.qualitype.RESTCountries.rest;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class RestCountryManager implements CountryManager {
 
 	public RestCountryManager() {
 		this.client = ClientBuilder.newClient();
-		this.webTarget = this.client.target("https://restcountries.eu/rest/v2");
+		this.webTarget = this.client.target("https://restcountries.com/v2");
 	}
 
 	@Override
@@ -58,7 +59,13 @@ public class RestCountryManager implements CountryManager {
 
 	@Override
 	public List<Currency> getAllCurrencies() throws Exception {
-		final List<Country> allCountries = getAllCountries();
+		final List<Country> allCountries = new LinkedList<>(getAllCountries());
+
+		for (int i = 0; i < allCountries.size(); i++) {
+			if (allCountries.get(i).getCurrencies() == null) {
+				allCountries.remove(i);
+			}
+		}
 		return allCountries.stream().map(Country::getCurrencies).flatMap(List::stream).collect(Collectors.toList());
 	}
 

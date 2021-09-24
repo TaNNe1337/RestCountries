@@ -40,6 +40,8 @@ public class BaseCountry {
 
 	private String numericCode;
 
+	private String continent;
+
 	public String getName() {
 		return this.name;
 	}
@@ -110,5 +112,13 @@ public class BaseCountry {
 
 	public String getNumericCode() {
 		return this.numericCode;
+	}
+
+	public String getContinent() {
+		return this.continent;
+	}
+
+	public void setContinent(String continent) {
+		this.continent = continent;
 	}
 }

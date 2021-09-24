@@ -6,9 +6,10 @@ public class Country extends BaseCountry {
 	private List<Currency> currencies;
 	private List<Language> languages;
 	private Translations translations;
-	private String flag;
+	private List<String> flags;
 	private List<RegionalBloc> regionalBlocs;
 	private String cioc;
+	private String independent;
 
 	public List<Currency> getCurrencies() {
 		return this.currencies;
@@ -22,8 +23,8 @@ public class Country extends BaseCountry {
 		return this.translations;
 	}
 
-	public String getFlag() {
-		return this.flag;
+	public List<String> getFlags() {
+		return this.flags;
 	}
 
 	public List<RegionalBloc> getRegionalBlocs() {
@@ -32,6 +33,10 @@ public class Country extends BaseCountry {
 
 	public String getCioc() {
 		return this.cioc;
+	}
+
+	public String getIndependent() {
+		return this.independent;
 	}
 
 }

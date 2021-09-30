@@ -111,8 +111,11 @@ public class PrimaryController implements Initializable {
 	}
 
 	private void addListener() {
-		final ConvertService cs = new ConvertService(this);
-		cs.start();
+		this.sourceCurrencySpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+			final ConvertService cs = new ConvertService(this.sourceCurrencyCombobox, this.resultCurrencyCombobox, newValue,
+					this.resultField);
+			cs.start();
+		});
 	}
 
 	private void addSelectionListener(TableView<Country> tableView1) {
@@ -122,24 +125,6 @@ public class PrimaryController implements Initializable {
 				this.sourceCurrencyCombobox.setValue(currency);
 			}
 		});
-	}
-
-	public Spinner<Double> getSpinner() {
-		return this.sourceCurrencySpinner;
-	}
-
-	public TextField getResultField() {
-		return this.resultField;
-	}
-	public RestConvertManager getConvertManager() {
-		return this.convertManager;
-	}
-
-	public ComboBox<Currency> getSourceComboBox() {
-		return this.sourceCurrencyCombobox;
-	}
-	public ComboBox<Currency> getResultComboBox() {
-		return this.resultCurrencyCombobox;
 	}
 
 }

@@ -1,23 +1,28 @@
 package com.qualitype.RESTCountries.javafx.util;
 
-import com.qualitype.RESTCountries.javafx.PrimaryController;
+import com.qualitype.RESTCountries.Currency;
 import com.qualitype.RESTCountries.rest.RestConvertManager;
 
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 public class ConvertService extends Service<Double> {
 
-	private final PrimaryController pc;
-	private final Spinner<Double> spinner;
 	private final RestConvertManager convertManager;
+	private final ComboBox<Currency> sourceComboBox;
+	private final ComboBox<Currency> resultComboBox;
+	private final Double value;
+	private final TextField resultField;
 
-	public ConvertService(PrimaryController pc) {
-		this.pc = pc;
-		this.spinner = this.pc.getSpinner();
+	public ConvertService(ComboBox<Currency> sourceCombo, ComboBox<Currency> resultCombo, Double value, TextField resultField) {
 		this.convertManager = new RestConvertManager();
+		this.sourceComboBox = sourceCombo;
+		this.resultComboBox = resultCombo;
+		this.value = value;
+		this.resultField = resultField;
 	}
 
 	@Override
@@ -26,27 +31,18 @@ public class ConvertService extends Service<Double> {
 
 			@Override
 			protected Double call() throws Exception {
-				//TODO Listner wird nur in neuem thread angehangen, rest des codes läuft im normalen thread
-				System.out.println("register");
-
-				ConvertService.this.spinner.valueProperty().addListener((observable, oldValue, newValue) -> {
-					System.out.println("Test");
-
-					final String sourceCurrency = ConvertService.this.pc.getSourceComboBox().getSelectionModel().getSelectedItem()
-							.getCode();
-					final String resultCurrency = ConvertService.this.pc.getResultComboBox().getSelectionModel().getSelectedItem()
-							.getCode();
-					if (sourceCurrency != null && resultCurrency != null) {
-						Double conversionRate = Double.valueOf(0);
-						try {
-							conversionRate = ConvertService.this.convertManager.convert(sourceCurrency, resultCurrency, 1);
-						} catch (final Exception e) {
-							e.printStackTrace();
-						}
-						ConvertService.this.pc.getResultField().setText(String.format("%.2f", newValue.doubleValue() * conversionRate));
+				final String sourceCurrency = ConvertService.this.sourceComboBox.getSelectionModel().getSelectedItem().getCode();
+				final String resultCurrency = ConvertService.this.resultComboBox.getSelectionModel().getSelectedItem().getCode();
+				if (sourceCurrency != null && resultCurrency != null) {
+					Double conversionRate = Double.valueOf(0);
+					try {
+						conversionRate = ConvertService.this.convertManager.convert(sourceCurrency, resultCurrency, 1);
+					} catch (final Exception e) {
+						e.printStackTrace();
 					}
+					return Double.valueOf(ConvertService.this.value.doubleValue() * conversionRate.doubleValue());
+				}
 
-				});
 				return null;
 			}
 
@@ -56,12 +52,11 @@ public class ConvertService extends Service<Double> {
 	@Override
 	protected void succeeded() {
 		super.succeeded();
-		getValue();
+		if (Platform.isFxApplicationThread()) {
 
-		// if (Platform.isFxApplicationThread())
-
-		Platform.runLater(() -> {
-			// ...
-		});
+			Platform.runLater(() -> {
+				this.resultField.setText(String.format("%.2f", getValue()));
+			});
+		}
 	}
 }

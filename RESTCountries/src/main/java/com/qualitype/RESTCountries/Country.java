@@ -1,12 +1,14 @@
 package com.qualitype.RESTCountries;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Country extends BaseCountry {
 	private List<Currency> currencies;
 	private List<Language> languages;
 	private Translations translations;
-	private List<String> flags;
+	private HashMap<String, String> flags;
+	private String flag;
 	private List<RegionalBloc> regionalBlocs;
 	private String cioc;
 	private String independent;
@@ -23,8 +25,12 @@ public class Country extends BaseCountry {
 		return this.translations;
 	}
 
-	public List<String> getFlags() {
+	public HashMap<String, String> getFlags() {
 		return this.flags;
+	}
+
+	public String getFlag() {
+		return this.flag;
 	}
 
 	public List<RegionalBloc> getRegionalBlocs() {
